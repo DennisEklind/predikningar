@@ -73,7 +73,7 @@
                     episodeElement.appendChild(title);
 
                     const description = document.createElement("p");
-                    description.innerHTML = episode.description.substring(0, episode.description.indexOf("<br>")).concat("&nbsp &nbsp &nbsp").concat(episode.pubDate.substring(0, 10));
+                    description.innerHTML = episode.description.substring(0, episode.description.indexOf("/n")).concat("&nbsp &nbsp &nbsp").concat(episode.pubDate.substring(0, 10));
                     episodeElement.appendChild(description);
 
                     const link = document.createElement("a");
