@@ -1,0 +1,31 @@
+
+name: Uppdatera podcastarkiv
+
+on:
+  schedule:
+    - cron: "7,27,47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-podcast:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Hämta repository
+        uses: actions/checkout@v4
+
+      - name: Konvertera RSS till JSON
+        run: python3 scripts/fetch_podcast.py
+
+      - name: Spara JSON till GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add episodes.json
+          git diff --staged --quiet || (
+            git commit -m "Uppdatera podcastarkiv" &&
+            git push
+          )
