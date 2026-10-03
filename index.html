@@ -75,7 +75,10 @@
                     episodeElement.appendChild(title);
 
                     const description = document.createElement("p");
-                    description.innerHTML = episode.description.substring(0, episode.description.indexOf("<hr>")).concat("&nbsp &nbsp &nbsp").concat(episode.pubDate.substring(0, 10));
+                    description.innerHTML =
+    episode.description.split("<hr>")[0] +
+    "&nbsp;&nbsp;&nbsp;" +
+    episode.pubDate.substring(0, 10);
                     episodeElement.appendChild(description);
 
                     const link = document.createElement("a");
