@@ -55,10 +55,8 @@
 
         // Funktion för att hämta och visa podcastavsnitt
         async function fetchEpisodes() {
-        const count = 20;
-
         const response = await fetch(
-            `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=${count}&api_key=${encodeURIComponent(apiKey)}`
+            `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`
         );
 
         const data = await response.json();
@@ -76,9 +74,9 @@
 
                     const description = document.createElement("p");
                     description.innerHTML =
-    episode.description.split("<hr>")[0] +
-    "&nbsp;&nbsp;&nbsp;" +
-    episode.pubDate.substring(0, 10);
+                    episode.description.split("<hr>")[0] +
+                    "&nbsp;&nbsp;&nbsp;" +
+                    episode.pubDate.substring(0, 10);
                     episodeElement.appendChild(description);
 
                     const link = document.createElement("a");
