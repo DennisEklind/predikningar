@@ -52,13 +52,15 @@
     <script>
         // RSS-feed URL
         const feedUrl = "https://feeds.acast.com/public/shows/karlskogabaptist";
-		const apiKey = "ptaafbefygnb1kvg7t0uzl3p0qgtfaay4anbyksw";
 
         // Funktion för att hämta och visa podcastavsnitt
         async function fetchEpisodes() {
-            const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&api_key=${encodeURIComponent(apiKey)}&count=20`);
-            const data = await response.json();
-            const episodesContainer = document.getElementById("episodes");
+    	const response = await fetch(
+        	`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`
+    	);
+
+    	const data = await response.json();
+    	const episodesContainer = document.getElementById("episodes");
 
             if (data.status === 'ok') {
                 const episodes = data.items;
