@@ -3,17 +3,18 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Predikningar – Karlskoga Baptist</title>
 
 <style>
 :root {
-    --accent: #6838bd;
-    --accent-hover: #51279d;
-    --text: #25212b;
-    --muted: #716b79;
-    --border: #e9e5ed;
-    --background: #f7f6f9;
+    --blue: #1769c2;
+    --blue-hover: #1055a0;
+    --blue-light: #eaf3ff;
+    --text: #202631;
+    --muted: #707987;
+    --border: #e4e8ee;
+    --background: #f6f8fb;
 }
 
 * {
@@ -28,107 +29,119 @@ body {
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-header {
+header, .podcast {
     max-width: 850px;
-    margin: 0 auto 28px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+header {
+    margin-bottom: 22px;
 }
 
 h1 {
-    font-size: clamp(1.6rem, 4vw, 2.2rem);
-    margin: 0 0 6px;
+    margin: 0 0 5px;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
     letter-spacing: -0.04em;
 }
 
 header p {
-    margin: 0;
     color: var(--muted);
+    margin: 0;
 }
 
-#episodes {
-    max-width: 850px;
-    margin: 0 auto;
-}
+/* Den gemensamma spelaren */
 
-.episode {
+.now-playing {
     background: white;
     border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 7px #24113b08;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 3px 12px #172b4608;
+    margin-bottom: 18px;
 }
 
-.episode-heading {
+.player-heading {
     display: flex;
+    gap: 15px;
     align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 20px;
 }
 
-.episode-icon {
-    flex: 0 0 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: var(--accent);
-    color: white;
+.cover {
+    flex: 0 0 66px;
+    height: 66px;
     display: grid;
     place-items: center;
-    font-size: 25px;
+    border-radius: 12px;
+    color: white;
+    background: var(--blue);
+    font-size: 30px;
 }
 
-.episode-info {
+.track-info {
     flex: 1;
     min-width: 0;
 }
 
-.episode h2 {
-    font-size: 1.08rem;
-    line-height: 1.45;
+.track-info h2 {
+    font-size: 1.15rem;
+    line-height: 1.4;
     margin: 0 0 5px;
     overflow-wrap: anywhere;
 }
 
-.episode-meta {
-    font-size: 0.9rem;
+.track-meta {
     color: var(--muted);
-    margin: 0;
+    font-size: 0.9rem;
     line-height: 1.5;
+    margin: 0;
 }
 
-.player {
+.controls {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
+    margin-top: 22px;
 }
 
 .play-button {
-    flex: 0 0 48px;
-    width: 48px;
-    height: 48px;
-    border: 0;
+    flex: 0 0 50px;
+    width: 50px;
+    height: 50px;
+    border: none;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--blue);
     color: white;
-    font-size: 20px;
+    font-size: 21px;
     cursor: pointer;
     display: grid;
     place-items: center;
-    transition: background 0.15s, transform 0.15s;
 }
 
 .play-button:hover {
-    background: var(--accent-hover);
-    transform: scale(1.04);
+    background: var(--blue-hover);
 }
 
-.play-button:focus-visible,
-.skip-button:focus-visible,
-.progress:focus-visible {
-    outline: 3px solid #b9a0e9;
-    outline-offset: 3px;
+.play-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
-.player-main {
+.skip-button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 7px 0;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.skip-button:hover {
+    color: var(--blue);
+}
+
+.timeline {
     flex: 1;
     min-width: 0;
 }
@@ -137,87 +150,156 @@ header p {
     display: block;
     width: 100%;
     height: 6px;
-    margin: 5px 0 8px;
-    accent-color: var(--accent);
+    margin: 4px 0 8px;
+    accent-color: var(--blue);
     cursor: pointer;
 }
 
 .time-row {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
     color: var(--muted);
     font-size: 0.76rem;
     font-variant-numeric: tabular-nums;
 }
 
-.skip-button {
-    border: 0;
-    background: transparent;
+/* Avsnittslistan */
+
+.list-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin: 22px 2px 10px;
+}
+
+.list-heading h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+#episode-count {
     color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.episode-list {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow-y: auto;
+    max-height: 460px;
+    overscroll-behavior: contain;
+}
+
+.episode-row {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
-    font-size: 0.78rem;
-    padding: 6px 2px;
-    white-space: nowrap;
+    transition: background 0.12s;
 }
 
-.skip-button:hover {
-    color: var(--accent);
+.episode-row:last-child {
+    border-bottom: none;
 }
 
-.episode-link {
-    display: inline-block;
-    margin-top: 15px;
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 0.86rem;
+.episode-row:hover {
+    background: #f7faff;
 }
 
-.episode-link:hover {
-    text-decoration: underline;
+.episode-row.selected {
+    background: var(--blue-light);
+}
+
+.row-play {
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #edf0f5;
+    color: #465365;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+}
+
+.selected .row-play {
+    background: var(--blue);
+    color: white;
+}
+
+.row-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.row-title {
+    margin: 0 0 4px;
+    font-size: 0.94rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.row-meta {
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+.episode-row:focus-visible,
+.play-button:focus-visible,
+.skip-button:focus-visible,
+.progress:focus-visible {
+    outline: 3px solid #9ac8ff;
+    outline-offset: 3px;
 }
 
 .status {
     color: var(--muted);
+    padding: 24px;
     text-align: center;
-    padding: 30px 12px;
 }
 
 @media (max-width: 480px) {
     body {
-        padding: 20px 10px;
+        padding: 18px 10px;
     }
 
-    .episode {
-        padding: 15px;
+    .now-playing {
+        padding: 16px;
     }
 
-    .episode-heading {
-        gap: 11px;
+    .cover {
+        flex-basis: 52px;
+        height: 52px;
+        font-size: 24px;
     }
 
-    .episode-icon {
-        flex-basis: 44px;
-        height: 44px;
-        font-size: 21px;
+    .track-info h2 {
+        font-size: 1.03rem;
     }
 
-    .episode h2 {
-        font-size: 1rem;
-    }
-
-    .player {
-        gap: 8px;
+    .controls {
+        gap: 9px;
     }
 
     .play-button {
-        flex-basis: 42px;
-        width: 42px;
-        height: 42px;
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
     }
 
     .skip-button {
-        font-size: 0.7rem;
+        font-size: 0.72rem;
+    }
+
+    .episode-row {
+        padding: 12px;
+        gap: 10px;
     }
 }
 </style>
@@ -230,14 +312,296 @@ header p {
     <p>Karlskoga Baptistförsamling · Lyssna när du vill</p>
 </header>
 
-<main id="episodes">
-    <p class="status">Hämtar predikningar …</p>
+<main class="podcast">
+
+    <section class="now-playing" aria-label="Podcastspelare">
+        <div class="player-heading">
+            <div class="cover" aria-hidden="true">♫</div>
+
+            <div class="track-info">
+                <h2 id="track-title">Välj en predikan</h2>
+                <p class="track-meta" id="track-meta">
+                    Välj ett avsnitt i listan nedan
+                </p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="play-button" class="play-button"
+                    type="button" aria-label="Spela upp" disabled>
+                ▶
+            </button>
+
+            <button id="back-button" class="skip-button"
+                    type="button" aria-label="Hoppa bakåt 15 sekunder">
+                ↶ 15
+            </button>
+
+            <div class="timeline">
+                <input id="progress" class="progress"
+                       type="range" min="0" max="1000" value="0"
+                       aria-label="Spelposition">
+
+                <div class="time-row">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">–:––</span>
+                </div>
+            </div>
+
+            <button id="forward-button" class="skip-button"
+                    type="button" aria-label="Hoppa framåt 15 sekunder">
+                15 ↷
+            </button>
+        </div>
+
+        <audio id="audio" preload="none"></audio>
+    </section>
+
+    <div class="list-heading">
+        <h2>Alla predikningar</h2>
+        <span id="episode-count"></span>
+    </div>
+
+    <section id="episode-list" class="episode-list"
+             aria-label="Avsnittslista" tabindex="0">
+        <p class="status">Hämtar predikningar …</p>
+    </section>
+
 </main>
 
 <script>
-async function fetchEpisodes() {
-    const container = document.getElementById("episodes");
+const audio = document.getElementById("audio");
+const playButton = document.getElementById("play-button");
+const backButton = document.getElementById("back-button");
+const forwardButton = document.getElementById("forward-button");
+const progress = document.getElementById("progress");
+const currentTimeLabel = document.getElementById("current-time");
+const durationLabel = document.getElementById("duration");
+const trackTitle = document.getElementById("track-title");
+const trackMeta = document.getElementById("track-meta");
+const episodeList = document.getElementById("episode-list");
+const episodeCount = document.getElementById("episode-count");
 
+let episodes = [];
+let selectedIndex = -1;
+
+function formatTime(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) {
+        return "0:00";
+    }
+
+    const total = Math.floor(seconds);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+
+    if (hours > 0) {
+        return `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    return `${minutes}:${String(secs).padStart(2, "0")}`;
+}
+
+function formatDate(value) {
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    return Number.isNaN(date.getTime())
+        ? ""
+        : date.toLocaleDateString("sv-SE");
+}
+
+function updatePlayButton() {
+    const playing = !audio.paused;
+
+    playButton.textContent = playing ? "Ⅱ" : "▶";
+    playButton.setAttribute(
+        "aria-label",
+        playing ? "Pausa" : "Spela upp"
+    );
+}
+
+function renderSelection() {
+    [...episodeList.children].forEach((row, index) => {
+        const selected = index === selectedIndex;
+
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-current", selected ? "true" : "false");
+
+        const icon = row.querySelector(".row-play");
+        icon.textContent = selected && !audio.paused ? "Ⅱ" : "▶";
+    });
+}
+
+async function selectEpisode(index, shouldPlay = true) {
+    const episode = episodes[index];
+    if (!episode) return;
+
+    const changed = selectedIndex !== index;
+    selectedIndex = index;
+
+    if (changed) {
+        audio.pause();
+        audio.src = episode.audioUrl || "";
+        audio.load();
+
+        trackTitle.textContent = episode.title || "Predikan";
+        trackMeta.textContent = [
+            episode.speaker,
+            formatDate(episode.pubDate)
+        ].filter(Boolean).join(" · ");
+
+        currentTimeLabel.textContent = "0:00";
+        durationLabel.textContent = "–:––";
+        progress.value = "0";
+    }
+
+    playButton.disabled = !episode.audioUrl;
+    renderSelection();
+    updatePlayButton();
+
+    if (shouldPlay && episode.audioUrl) {
+        try {
+            await audio.play();
+        } catch (error) {
+            console.error("Kunde inte spela avsnittet:", error);
+        }
+    }
+
+    renderSelection();
+    updatePlayButton();
+}
+
+function renderEpisodes() {
+    episodeList.replaceChildren();
+
+    episodes.forEach((episode, index) => {
+        const row = document.createElement("div");
+        row.className = "episode-row";
+        row.tabIndex = 0;
+        row.setAttribute("role", "button");
+        row.setAttribute(
+            "aria-label",
+            `Spela ${episode.title || "predikan"}`
+        );
+
+        const icon = document.createElement("div");
+        icon.className = "row-play";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "▶";
+
+        const info = document.createElement("div");
+        info.className = "row-info";
+
+        const title = document.createElement("div");
+        title.className = "row-title";
+        title.textContent = episode.title || "Predikan";
+
+        const meta = document.createElement("div");
+        meta.className = "row-meta";
+        meta.textContent = [
+            episode.speaker,
+            formatDate(episode.pubDate)
+        ].filter(Boolean).join(" · ");
+
+        info.append(title, meta);
+        row.append(icon, info);
+
+        row.addEventListener("click", () => {
+            selectEpisode(index, true);
+        });
+
+        row.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectEpisode(index, true);
+            }
+        });
+
+        episodeList.appendChild(row);
+    });
+
+    episodeCount.textContent = `${episodes.length} avsnitt`;
+}
+
+playButton.addEventListener("click", async () => {
+    if (selectedIndex < 0) {
+        if (episodes.length) {
+            await selectEpisode(0, true);
+        }
+        return;
+    }
+
+    if (audio.paused) {
+        try {
+            await audio.play();
+        } catch (error) {
+            console.error("Kunde inte spela ljudet:", error);
+        }
+    } else {
+        audio.pause();
+    }
+
+    updatePlayButton();
+    renderSelection();
+});
+
+backButton.addEventListener("click", () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 15);
+});
+
+forwardButton.addEventListener("click", () => {
+    const end = Number.isFinite(audio.duration)
+        ? audio.duration
+        : audio.currentTime + 15;
+
+    audio.currentTime = Math.min(end, audio.currentTime + 15);
+});
+
+progress.addEventListener("input", () => {
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime =
+            (Number(progress.value) / 1000) * audio.duration;
+    }
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    durationLabel.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener("durationchange", () => {
+    if (Number.isFinite(audio.duration)) {
+        durationLabel.textContent = formatTime(audio.duration);
+    }
+});
+
+audio.addEventListener("timeupdate", () => {
+    currentTimeLabel.textContent = formatTime(audio.currentTime);
+
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        progress.value = String(
+            Math.round(audio.currentTime / audio.duration * 1000)
+        );
+    }
+});
+
+audio.addEventListener("play", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+audio.addEventListener("pause", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+audio.addEventListener("ended", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+async function fetchEpisodes() {
     try {
         const response = await fetch("./episodes.json");
 
@@ -246,216 +610,20 @@ async function fetchEpisodes() {
         }
 
         const data = await response.json();
-        container.replaceChildren();
+        episodes = data.episodes || [];
 
-        // Alla spelare delar på en aktiv ljuduppspelning.
-        let activeAudio = null;
+        renderEpisodes();
+        episodeCount.textContent = `${episodes.length} avsnitt`;
 
-        function formatTime(seconds) {
-            if (!Number.isFinite(seconds) || seconds < 0) {
-                return "0:00";
-            }
-
-            const total = Math.floor(seconds);
-            const hours = Math.floor(total / 3600);
-            const minutes = Math.floor((total % 3600) / 60);
-            const secs = total % 60;
-
-            if (hours > 0) {
-                return `${hours}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-            }
-
-            return `${minutes}:${String(secs).padStart(2, "0")}`;
-        }
-
-        function makeButton(label, className, text) {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = className;
-            button.setAttribute("aria-label", label);
-            button.textContent = text;
-            return button;
-        }
-
-        data.episodes.forEach(episode => {
-            const card = document.createElement("article");
-            card.className = "episode";
-
-            // Titel, talare och datum
-            const heading = document.createElement("div");
-            heading.className = "episode-heading";
-
-            const icon = document.createElement("div");
-            icon.className = "episode-icon";
-            icon.textContent = "♫";
-            icon.setAttribute("aria-hidden", "true");
-
-            const info = document.createElement("div");
-            info.className = "episode-info";
-
-            const title = document.createElement("h2");
-            title.textContent = episode.title || "Predikan";
-
-            const meta = document.createElement("p");
-            meta.className = "episode-meta";
-
-            const date = new Date(episode.pubDate);
-            const formattedDate = Number.isNaN(date.getTime())
-                ? ""
-                : date.toLocaleDateString("sv-SE");
-
-            meta.textContent = [
-                episode.speaker,
-                formattedDate
-            ].filter(Boolean).join(" · ");
-
-            info.append(title, meta);
-            heading.append(icon, info);
-
-            // Ljudspelare
-            const player = document.createElement("div");
-            player.className = "player";
-
-            const play = makeButton("Spela upp", "play-button", "▶");
-
-            const back = makeButton("Hoppa bakåt 15 sekunder", "skip-button", "↶ 15");
-            const forward = makeButton("Hoppa framåt 15 sekunder", "skip-button", "15 ↷");
-
-            const main = document.createElement("div");
-            main.className = "player-main";
-
-            const progress = document.createElement("input");
-            progress.type = "range";
-            progress.className = "progress";
-            progress.min = "0";
-            progress.max = "1000";
-            progress.value = "0";
-            progress.setAttribute("aria-label", "Spelposition");
-
-            const times = document.createElement("div");
-            times.className = "time-row";
-
-            const currentTime = document.createElement("span");
-            currentTime.textContent = "0:00";
-
-            const duration = document.createElement("span");
-            duration.textContent = "–:––";
-
-            times.append(currentTime, duration);
-            main.append(progress, times);
-
-            const audio = document.createElement("audio");
-            audio.preload = "none";
-            audio.src = episode.audioUrl || "";
-
-            play.disabled = !episode.audioUrl;
-            if (!episode.audioUrl) {
-                play.title = "Ljudfil saknas";
-            }
-
-            function updatePlayButton() {
-                const isPlaying = !audio.paused;
-                play.textContent = isPlaying ? "Ⅱ" : "▶";
-                play.setAttribute(
-                    "aria-label",
-                    isPlaying ? "Pausa" : "Spela upp"
-                );
-            }
-
-            play.addEventListener("click", async () => {
-                if (audio.paused) {
-                    if (activeAudio && activeAudio !== audio) {
-                        activeAudio.pause();
-                    }
-
-                    activeAudio = audio;
-
-                    try {
-                        await audio.play();
-                    } catch (error) {
-                        console.error("Kunde inte spela ljudet:", error);
-                    }
-                } else {
-                    audio.pause();
-                }
-
-                updatePlayButton();
-            });
-
-            back.addEventListener("click", () => {
-                audio.currentTime = Math.max(0, audio.currentTime - 15);
-            });
-
-            forward.addEventListener("click", () => {
-                const end = Number.isFinite(audio.duration)
-                    ? audio.duration
-                    : audio.currentTime + 15;
-
-                audio.currentTime = Math.min(end, audio.currentTime + 15);
-            });
-
-            progress.addEventListener("input", () => {
-                if (Number.isFinite(audio.duration) && audio.duration > 0) {
-                    audio.currentTime =
-                        (Number(progress.value) / 1000) * audio.duration;
-                }
-            });
-
-            audio.addEventListener("loadedmetadata", () => {
-                duration.textContent = formatTime(audio.duration);
-            });
-
-            audio.addEventListener("durationchange", () => {
-                if (Number.isFinite(audio.duration)) {
-                    duration.textContent = formatTime(audio.duration);
-                }
-            });
-
-            audio.addEventListener("timeupdate", () => {
-                currentTime.textContent = formatTime(audio.currentTime);
-
-                if (Number.isFinite(audio.duration) && audio.duration > 0) {
-                    progress.value = String(
-                        Math.round(audio.currentTime / audio.duration * 1000)
-                    );
-                }
-            });
-
-            audio.addEventListener("play", updatePlayButton);
-            audio.addEventListener("pause", updatePlayButton);
-
-            audio.addEventListener("ended", () => {
-                updatePlayButton();
-                progress.value = "0";
-                currentTime.textContent = "0:00";
-                activeAudio = null;
-            });
-
-            player.append(play, back, main, forward);
-
-            // Länk till originalavsnittet
-            card.append(heading, player, audio);
-
-            if (episode.link) {
-                const link = document.createElement("a");
-                link.className = "episode-link";
-                link.href = episode.link;
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-                link.textContent = "Visa avsnitt hos Acast ↗";
-                card.appendChild(link);
-            }
-
-            container.appendChild(card);
-        });
-
-        if (data.episodes.length === 0) {
-            container.textContent = "Inga predikningar hittades.";
+        if (episodes.length > 0) {
+            await selectEpisode(0, false);
+        } else {
+            episodeList.textContent = "Inga predikningar hittades.";
         }
 
     } catch (error) {
-        console.error("Kunde inte läsa podcastarkivet:", error);
-        container.textContent =
+        console.error("Kunde inte hämta predikningarna:", error);
+        episodeList.textContent =
             "Kunde inte hämta predikningarna just nu. Försök igen senare.";
     }
 }
