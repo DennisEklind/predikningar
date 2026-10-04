@@ -1,16 +1,7 @@
 {
-  "updated": "2026-10-04T18:16:39.200142+00:00",
+  "updated": "2026-10-04T21:45:39.344913+00:00",
   "count": 499,
   "episodes": [
-    {
-      "title": "Hur kan man tro på Gud?",
-      "speaker": "Martin Hårsmar",
-      "pubDate": "Sun, 04 Oct 2026 16:08:51 GMT",
-      "date": "Sun, 04 Oct 2026",
-      "description": "Martin Hårsmar<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
-      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ac27a13ed21e3ea75364e1f",
-      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ac27a13ed21e3ea75364e1f/media.mp3"
-    },
     {
       "title": "Lärjungaskap",
       "speaker": "Ola Gustavsson",
@@ -19,6 +10,15 @@
       "description": "Ola Gustavsson<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
       "link": "https://shows.acast.com/karlskogabaptist/episodes/6ac278faed21e3ea75360a7a",
       "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ac278faed21e3ea75360a7a/media.mp3"
+    },
+    {
+      "title": "Hur kan man tro på Gud?",
+      "speaker": "Martin Hårsmar",
+      "pubDate": "Thu, 01 Oct 2026 16:08:51 GMT",
+      "date": "Thu, 01 Oct 2026",
+      "description": "Martin Hårsmar<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ac27a13ed21e3ea75364e1f",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ac27a13ed21e3ea75364e1f/media.mp3"
     },
     {
       "title": "Ordet",
