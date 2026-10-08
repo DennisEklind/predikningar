@@ -1,7 +1,16 @@
 {
-  "updated": "2026-10-08T14:04:51.533331+00:00",
-  "count": 499,
+  "updated": "2026-10-08T19:55:31.197737+00:00",
+  "count": 500,
   "episodes": [
+    {
+      "title": "Tro och tvivel lektion 4",
+      "speaker": "Martin Hårsmar",
+      "pubDate": "Thu, 08 Oct 2026 17:50:03 GMT",
+      "date": "Thu, 08 Oct 2026",
+      "description": "Martin Hårsmar<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ac7d7cb39599f7c563d0d8c",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ac7d7cb39599f7c563d0d8c/media.mp3"
+    },
     {
       "title": "Lärjungaskap",
       "speaker": "Ola Gustavsson",
