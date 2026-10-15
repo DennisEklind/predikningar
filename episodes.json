@@ -1,7 +1,16 @@
 {
-  "updated": "2026-10-15T15:41:06.424925+00:00",
-  "count": 501,
+  "updated": "2026-10-15T19:27:58.938299+00:00",
+  "count": 502,
   "episodes": [
+    {
+      "title": "Tro och tvivel lektion 5",
+      "speaker": "Martin Hårsmar",
+      "pubDate": "Thu, 15 Oct 2026 17:55:11 GMT",
+      "date": "Thu, 15 Oct 2026",
+      "description": "Martin Hårsmar<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ad1137fd3bfab176ef443d4",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ad1137fd3bfab176ef443d4/media.mp3"
+    },
     {
       "title": "Jesus går alltid med",
       "speaker": "Martin Hårsmar",
