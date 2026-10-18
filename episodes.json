@@ -1,7 +1,16 @@
 {
-  "updated": "2026-10-18T14:32:15.506546+00:00",
-  "count": 502,
+  "updated": "2026-10-18T17:34:21.746227+00:00",
+  "count": 503,
   "episodes": [
+    {
+      "title": "Andens gåvor",
+      "speaker": "Stanley Eklind",
+      "pubDate": "Sun, 18 Oct 2026 15:44:39 GMT",
+      "date": "Sun, 18 Oct 2026",
+      "description": "Stanley Eklind<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ad4e9673243d006bba6756a",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ad4e9673243d006bba6756a/media.mp3"
+    },
     {
       "title": "Tro och tvivel lektion 5",
       "speaker": "Martin Hårsmar",
