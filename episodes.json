@@ -1,7 +1,25 @@
 {
-  "updated": "2026-10-24T14:46:22.708159+00:00",
-  "count": 503,
+  "updated": "2026-10-24T17:40:24.046234+00:00",
+  "count": 505,
   "episodes": [
+    {
+      "title": "Om nya NT 2026",
+      "speaker": "Tommy Wasserman",
+      "pubDate": "Sat, 24 Oct 2026 16:00:00 GMT",
+      "date": "Sat, 24 Oct 2026",
+      "description": "Tommy Wasserman<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6adce940959e7ea69dbff4ec",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6adce940959e7ea69dbff4ec/media.mp3"
+    },
+    {
+      "title": "Från handskrifter till översättning",
+      "speaker": "Tommy Wasserman",
+      "pubDate": "Sat, 24 Oct 2026 14:00:00 GMT",
+      "date": "Sat, 24 Oct 2026",
+      "description": "Tommy Wasserman<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6adce90b959e7ea69dbfe381",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6adce90b959e7ea69dbfe381/media.mp3"
+    },
     {
       "title": "Andens gåvor",
       "speaker": "Stanley Eklind",
