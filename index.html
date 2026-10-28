@@ -306,6 +306,52 @@ header p {
         gap: 10px;
     }
 }
+    
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #d3dbe6;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin-bottom: 10px;
+    color: #707987;
+}
+
+.search-box:focus-within {
+    border-color: #1769c2;
+    box-shadow: 0 0 0 3px #1769c21a;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #202631;
+    font: inherit;
+    font-size: 0.92rem;
+}
+
+.search-box input::placeholder {
+    color: #929aa6;
+}
+
+.search-box button {
+    border: none;
+    background: transparent;
+    color: #707987;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.search-box button[hidden] {
+    display: none;
+}
+
 </style>
 </head>
 
@@ -360,9 +406,21 @@ header p {
     </section>
 
     <div class="list-heading">
-        <h2>Alla predikningar</h2>
-        <span id="episode-count"></span>
-    </div>
+    <h2>Alla predikningar</h2>
+    <span id="episode-count"></span>
+</div>
+
+<div class="search-box">
+    <span aria-hidden="true">⌕</span>
+    <input
+        id="episode-search"
+        type="search"
+        placeholder="Sök på titel eller predikant..."
+        aria-label="Sök på predikans titel eller predikant"
+    >
+    <button id="clear-search" type="button"
+            aria-label="Rensa sökning" hidden>×</button>
+</div>
 
     <section id="episode-list" class="episode-list"
              aria-label="Avsnittslista" tabindex="0">
@@ -475,14 +533,47 @@ async function selectEpisode(index, shouldPlay = true) {
     updatePlayButton();
 }
 
-function renderEpisodes() {
-    episodeList.replaceChildren();
 
-    episodes.forEach((episode, index) => {
+const searchInput = document.getElementById("episode-search");
+const clearSearch = document.getElementById("clear-search");
+
+function renderEpisodes() {
+    const query = searchInput.value.trim().toLocaleLowerCase("sv");
+
+    const filteredEpisodes = episodes
+        .map((episode, index) => ({ episode, index }))
+        .filter(({ episode }) => {
+            const title = (episode.title || "").toLocaleLowerCase("sv");
+            const speaker = (episode.speaker || "").toLocaleLowerCase("sv");
+
+            return title.includes(query) || speaker.includes(query);
+        });
+
+    episodeList.replaceChildren();
+    episodeCount.textContent =
+        query
+            ? `${filteredEpisodes.length} av ${episodes.length} avsnitt`
+            : `${episodes.length} avsnitt`;
+
+    clearSearch.hidden = !searchInput.value;
+
+    if (filteredEpisodes.length === 0) {
+        const message = document.createElement("p");
+        message.className = "status";
+        message.textContent = "Inga predikningar matchade din sökning.";
+        episodeList.appendChild(message);
+        return;
+    }
+
+    filteredEpisodes.forEach(({ episode, index }) => {
         const row = document.createElement("div");
         row.className = "episode-row";
         row.tabIndex = 0;
         row.setAttribute("role", "button");
+
+        const selected = index === selectedIndex;
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-current", selected ? "true" : "false");
         row.setAttribute(
             "aria-label",
             `Spela ${episode.title || "predikan"}`
@@ -491,7 +582,7 @@ function renderEpisodes() {
         const icon = document.createElement("div");
         icon.className = "row-play";
         icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "▶";
+        icon.textContent = selected && !audio.paused ? "Ⅱ" : "▶";
 
         const info = document.createElement("div");
         info.className = "row-info";
@@ -523,9 +614,16 @@ function renderEpisodes() {
 
         episodeList.appendChild(row);
     });
-
-    episodeCount.textContent = `${episodes.length} avsnitt`;
 }
+
+searchInput.addEventListener("input", renderEpisodes);
+
+clearSearch.addEventListener("click", () => {
+    searchInput.value = "";
+    renderEpisodes();
+    searchInput.focus();
+});
+
 
 playButton.addEventListener("click", async () => {
     if (selectedIndex < 0) {
