@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -162,28 +163,6 @@ header p {
     font-variant-numeric: tabular-nums;
 }
 
-/* Sökfältet */
-.search-container {
-    margin: 22px 0 12px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 12px 16px;
-    font-size: 0.95rem;
-    border: 1px solid #d3dbe6;
-    border-radius: 10px;
-    background: white;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.search-input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px #9ac8ff40;
-}
-
 /* Avsnittslistan */
 
 .list-heading {
@@ -191,7 +170,7 @@ header p {
     justify-content: space-between;
     align-items: baseline;
     gap: 12px;
-    margin: 10px 2px 10px;
+    margin: 22px 2px 10px;
 }
 
 .list-heading h2 {
@@ -327,14 +306,58 @@ header p {
         gap: 10px;
     }
 }
+    
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #d3dbe6;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin-bottom: 10px;
+    color: #707987;
+}
+
+.search-box:focus-within {
+    border-color: #1769c2;
+    box-shadow: 0 0 0 3px #1769c21a;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #202631;
+    font: inherit;
+    font-size: 0.92rem;
+}
+
+.search-box input::placeholder {
+    color: #929aa6;
+}
+
+.search-box button {
+    border: none;
+    background: transparent;
+    color: #707987;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+.search-box button[hidden] {
+    display: none;
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Predikningar</h1>
-    <p>Karlskoga Baptistförsamling</p>
 </header>
 
 <main class="podcast">
@@ -382,15 +405,22 @@ header p {
         <audio id="audio" preload="none"></audio>
     </section>
 
-    <!-- SÖKFÄLTET LAGGTS TILL HÄR -->
-    <div class="search-container">
-        <input type="text" id="search-input" class="search-input" placeholder="Sök på titel, predikant eller datum...">
-    </div>
-
     <div class="list-heading">
-        <h2>Alla predikningar</h2>
-        <span id="episode-count"></span>
-    </div>
+    <h2>Alla predikningar</h2>
+    <span id="episode-count"></span>
+</div>
+
+<div class="search-box">
+    <span aria-hidden="true">⌕</span>
+    <input
+        id="episode-search"
+        type="search"
+        placeholder="Sök på titel eller predikant..."
+        aria-label="Sök på predikans titel eller predikant"
+    >
+    <button id="clear-search" type="button"
+            aria-label="Rensa sökning" hidden>×</button>
+</div>
 
     <section id="episode-list" class="episode-list"
              aria-label="Avsnittslista" tabindex="0">
@@ -411,10 +441,8 @@ const trackTitle = document.getElementById("track-title");
 const trackMeta = document.getElementById("track-meta");
 const episodeList = document.getElementById("episode-list");
 const episodeCount = document.getElementById("episode-count");
-const searchInput = document.getElementById("search-input"); // Hämtar sökfältet
 
 let episodes = [];
-let filteredEpisodes = []; // Sparar de filtrerade resultaten separat
 let selectedIndex = -1;
 
 function formatTime(seconds) {
@@ -446,82 +474,262 @@ function formatDate(value) {
 
 function updatePlayButton() {
     const playing = !audio.paused;
+
     playButton.textContent = playing ? "Ⅱ" : "▶";
+    playButton.setAttribute(
+        "aria-label",
+        playing ? "Pausa" : "Spela upp"
+    );
 }
 
-// NY FUNKTION: Renderar listan baserat på skickad array (alla eller sökresultat)
-function renderEpisodes(listToRender) {
-    episodeList.innerHTML = "";
+function renderSelection() {
+    [...episodeList.children].forEach((row, index) => {
+        const selected = index === selectedIndex;
 
-    if (listToRender.length === 0) {
-        episodeList.innerHTML = '<p class="status">Inga predikningar matchar din sökning.</p>';
-        episodeCount.textContent = `0 av ${episodes.length}`;
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-current", selected ? "true" : "false");
+
+        const icon = row.querySelector(".row-play");
+        icon.textContent = selected && !audio.paused ? "Ⅱ" : "▶";
+    });
+}
+
+async function selectEpisode(index, shouldPlay = true) {
+    const episode = episodes[index];
+    if (!episode) return;
+
+    const changed = selectedIndex !== index;
+    selectedIndex = index;
+
+    if (changed) {
+        audio.pause();
+        audio.src = episode.audioUrl || "";
+        audio.load();
+
+        trackTitle.textContent = episode.title || "Predikan";
+        trackMeta.textContent = [
+            episode.speaker,
+            formatDate(episode.pubDate)
+        ].filter(Boolean).join(" · ");
+
+        currentTimeLabel.textContent = "0:00";
+        durationLabel.textContent = "–:––";
+        progress.value = "0";
+    }
+
+    playButton.disabled = !episode.audioUrl;
+    renderSelection();
+    updatePlayButton();
+
+    if (shouldPlay && episode.audioUrl) {
+        try {
+            await audio.play();
+        } catch (error) {
+            console.error("Kunde inte spela avsnittet:", error);
+        }
+    }
+
+    renderSelection();
+    updatePlayButton();
+}
+
+
+const searchInput = document.getElementById("episode-search");
+const clearSearch = document.getElementById("clear-search");
+
+function renderEpisodes() {
+    const query = searchInput.value.trim().toLocaleLowerCase("sv");
+
+    const filteredEpisodes = episodes
+        .map((episode, index) => ({ episode, index }))
+        .filter(({ episode }) => {
+            const title = (episode.title || "").toLocaleLowerCase("sv");
+            const speaker = (episode.speaker || "").toLocaleLowerCase("sv");
+
+            return title.includes(query) || speaker.includes(query);
+        });
+
+    episodeList.replaceChildren();
+    episodeCount.textContent =
+        query
+            ? `${filteredEpisodes.length} av ${episodes.length} avsnitt`
+            : `${episodes.length} avsnitt`;
+
+    clearSearch.hidden = !searchInput.value;
+
+    if (filteredEpisodes.length === 0) {
+        const message = document.createElement("p");
+        message.className = "status";
+        message.textContent = "Inga predikningar matchade din sökning.";
+        episodeList.appendChild(message);
         return;
     }
 
-    // Uppdatera räknaren (visar t.ex. "5 av 42")
-    if (listToRender.length === episodes.length) {
-        episodeCount.textContent = `${episodes.length} st`;
-    } else {
-        episodeCount.textContent = `${listToRender.length} av ${episodes.length}`;
-    }
-
-    listToRender.forEach((episode, index) => {
+    filteredEpisodes.forEach(({ episode, index }) => {
         const row = document.createElement("div");
         row.className = "episode-row";
-        
-        // Hitta om detta element råkar vara det som spelas just nu
-        // Vi mäter mot originalindexet i huvudlistan för att behålla rätt ljudfil
-Använd koden med försiktighet.
-const originalIndex = episodes.indexOf(episode);
-if (originalIndex === selectedIndex) {
-row.classList.add("selected");
+        row.tabIndex = 0;
+        row.setAttribute("role", "button");
+
+        const selected = index === selectedIndex;
+        row.classList.toggle("selected", selected);
+        row.setAttribute("aria-current", selected ? "true" : "false");
+        row.setAttribute(
+            "aria-label",
+            `Spela ${episode.title || "predikan"}`
+        );
+
+        const icon = document.createElement("div");
+        icon.className = "row-play";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = selected && !audio.paused ? "Ⅱ" : "▶";
+
+        const info = document.createElement("div");
+        info.className = "row-info";
+
+        const title = document.createElement("div");
+        title.className = "row-title";
+        title.textContent = episode.title || "Predikan";
+
+        const meta = document.createElement("div");
+        meta.className = "row-meta";
+        meta.textContent = [
+            episode.speaker,
+            formatDate(episode.pubDate)
+        ].filter(Boolean).join(" · ");
+
+        info.append(title, meta);
+        row.append(icon, info);
+
+        row.addEventListener("click", () => {
+            selectEpisode(index, true);
+        });
+
+        row.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                selectEpisode(index, true);
+            }
+        });
+
+        episodeList.appendChild(row);
+    });
 }
-const dateStr = formatDate(episode.date || episode.pubDate);
-const speakerStr = episode.speaker || episode.author || "Okänd predikant";
-row.innerHTML = <div class="row-play">▶</div> <div class="row-info"> <h3 class="row-title">${episode.title}</h3> <div class="row-meta">${dateStr} • ${speakerStr}</div> </div>;
-row.addEventListener("click", () => {
-selectEpisode(originalIndex);
+
+searchInput.addEventListener("input", renderEpisodes);
+
+clearSearch.addEventListener("click", () => {
+    searchInput.value = "";
+    renderEpisodes();
+    searchInput.focus();
 });
-episodeList.appendChild(row);
+
+
+playButton.addEventListener("click", async () => {
+    if (selectedIndex < 0) {
+        if (episodes.length) {
+            await selectEpisode(0, true);
+        }
+        return;
+    }
+
+    if (audio.paused) {
+        try {
+            await audio.play();
+        } catch (error) {
+            console.error("Kunde inte spela ljudet:", error);
+        }
+    } else {
+        audio.pause();
+    }
+
+    updatePlayButton();
+    renderSelection();
 });
+
+backButton.addEventListener("click", () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 15);
+});
+
+forwardButton.addEventListener("click", () => {
+    const end = Number.isFinite(audio.duration)
+        ? audio.duration
+        : audio.currentTime + 15;
+
+    audio.currentTime = Math.min(end, audio.currentTime + 15);
+});
+
+progress.addEventListener("input", () => {
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        audio.currentTime =
+            (Number(progress.value) / 1000) * audio.duration;
+    }
+});
+
+audio.addEventListener("loadedmetadata", () => {
+    durationLabel.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener("durationchange", () => {
+    if (Number.isFinite(audio.duration)) {
+        durationLabel.textContent = formatTime(audio.duration);
+    }
+});
+
+audio.addEventListener("timeupdate", () => {
+    currentTimeLabel.textContent = formatTime(audio.currentTime);
+
+    if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        progress.value = String(
+            Math.round(audio.currentTime / audio.duration * 1000)
+        );
+    }
+});
+
+audio.addEventListener("play", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+audio.addEventListener("pause", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+audio.addEventListener("ended", () => {
+    updatePlayButton();
+    renderSelection();
+});
+
+async function fetchEpisodes() {
+    try {
+        const response = await fetch("./episodes.json");
+
+        if (!response.ok) {
+            throw new Error(`HTTP-fel: ${response.status}`);
+        }
+
+        const data = await response.json();
+        episodes = data.episodes || [];
+
+        renderEpisodes();
+        episodeCount.textContent = `${episodes.length} avsnitt`;
+
+        if (episodes.length > 0) {
+            await selectEpisode(0, false);
+        } else {
+            episodeList.textContent = "Inga predikningar hittades.";
+        }
+
+    } catch (error) {
+        console.error("Kunde inte hämta predikningarna:", error);
+        episodeList.textContent =
+            "Kunde inte hämta predikningarna just nu. Försök igen senare.";
+    }
 }
-// NY EVENT LISTENER: Filtrerar listan när användaren skriver
-searchInput.addEventListener("input", (e) => {
-const query = e.target.value.toLowerCase().trim();
-filteredEpisodes = episodes.filter(episode => {
-const title = (episode.title || "").toLowerCase();
-const speaker = (episode.speaker || episode.author || "").toLowerCase();
-const dateStr = formatDate(episode.date || episode.pubDate).toLowerCase();
-return title.includes(query) || speaker.includes(query) || dateStr.includes(query);
-});
-renderEpisodes(filteredEpisodes);
-});
-function selectEpisode(index) {
-if (index < 0 || index >= episodes.length) return;
-selectedIndex = index;
-const episode = episodes[selectedIndex];
-trackTitle.textContent = episode.title;
-const speakerStr = episode.speaker || episode.author || "Okänd predikant";
-trackMeta.textContent = ${formatDate(episode.date || episode.pubDate)} • ${speakerStr};
-// Antar att url ligger i episode.url eller i en RSS enclosure
-const audioUrl = episode.url || (episode.enclosure ? episode.enclosure.url : "");
-audio.src = audioUrl;
-playButton.disabled = false;
-audio.play().catch(err => console.log("Autoplay blockerades:", err));
-// Rita om listan så rätt rad markeras som aktiv ("selected")
-renderEpisodes(filteredEpisodes.length > 0 || searchInput.value ? filteredEpisodes : episodes);
-}
-// --- DUMMYDATA FÖR DEMO (Ersätts av din riktiga API/RSS-hämtning nedan) ---
-// I din riktiga kod tilldelar du bara din data till episodes och kör filteredEpisodes = episodes; renderEpisodes(episodes);
-episodes = [
-{ title: "Att vandra i tro", speaker: "Stefan Salomonsson", date: "2026-10-15", url: "#" },
-{ title: "Nåd och frid över staden", speaker: "Maria Eriksson", date: "2026-10-08", url: "#" },
-{ title: "Hopp och framtid", speaker: "Stefan Salomonsson", date: "2026-09-24", url: "#" }
-];
-filteredEpisodes = episodes;
-renderEpisodes(episodes);
-// ------------------------------------------------------------------------
-// Eventuella spelarkontroller (play/pause osv.) fortsätter här nedan...
-audio.addEventListener("play", updatePlayButton);
-audio.addEventListener("pause", updatePlayButton);
+
+fetchEpisodes();
+</script>
+
+</body>
+</html>
