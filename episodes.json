@@ -1,7 +1,16 @@
 {
-  "updated": "2026-11-01T14:14:23.113824+00:00",
-  "count": 505,
+  "updated": "2026-11-01T19:03:05.164110+00:00",
+  "count": 506,
   "episodes": [
+    {
+      "title": "Den Helige Ande",
+      "speaker": "Maria Johansson",
+      "pubDate": "Sun, 01 Nov 2026 17:01:43 GMT",
+      "date": "Sun, 01 Nov 2026",
+      "description": "Maria Johansson<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6ae770774305b076c15dfe6a",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6ae770774305b076c15dfe6a/media.mp3"
+    },
     {
       "title": "Om nya NT 2026",
       "speaker": "Tommy Wasserman",
