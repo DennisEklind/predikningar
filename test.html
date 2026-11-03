@@ -351,7 +351,21 @@ header p {
 .search-box button[hidden] {
     display: none;
 }
+.cover {
+    flex: 0 0 66px;
+    height: 66px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+}
 
+.cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 </style>
 </head>
 
@@ -364,7 +378,9 @@ header p {
 
     <section class="now-playing" aria-label="Podcastspelare">
         <div class="player-heading">
-            <div class="cover" aria-hidden="true">♫</div>
+            <div class="cover">
+               <img src="karlskoga-baptist-logo.png" alt="Karlskoga Baptist">
+            </div>
 
             <div class="track-info">
                 <h2 id="track-title">Välj en predikan</h2>
