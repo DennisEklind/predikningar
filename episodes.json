@@ -1,7 +1,43 @@
 {
-  "updated": "2026-11-22T10:04:52.415577+00:00",
-  "count": 508,
+  "updated": "2026-11-22T17:47:32.141283+00:00",
+  "count": 512,
   "episodes": [
+    {
+      "title": "Manna",
+      "speaker": "Johan Beckman",
+      "pubDate": "Sun, 22 Nov 2026 16:20:59 GMT",
+      "date": "Sun, 22 Nov 2026",
+      "description": "Johan Beckman<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6b03166b8e8174f98375e7b5",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6b03166b8e8174f98375e7b5/media.mp3"
+    },
+    {
+      "title": "Tro och tvivel lektion 8",
+      "speaker": "Martin Hårsmar",
+      "pubDate": "Wed, 18 Nov 2026 23:00:00 GMT",
+      "date": "Wed, 18 Nov 2026",
+      "description": "Martin Hårsmar<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6b02fa393ad67ecda2a5f0b3",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6b02fa393ad67ecda2a5f0b3/media.mp3"
+    },
+    {
+      "title": "Ur Guds perspektiv",
+      "speaker": "Jonas Berntsson",
+      "pubDate": "Sat, 14 Nov 2026 23:00:00 GMT",
+      "date": "Sat, 14 Nov 2026",
+      "description": "Jonas Berntsson<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6b02fc4b8e8174f9836d4f0d",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6b02fc4b8e8174f9836d4f0d/media.mp3"
+    },
+    {
+      "title": "Tro och tvivel lektion 7",
+      "speaker": "Johan Beckman",
+      "pubDate": "Wed, 11 Nov 2026 23:00:00 GMT",
+      "date": "Wed, 11 Nov 2026",
+      "description": "Johan Beckman<hr><p style='color:grey; font-size:0.75em;'> Hosted on Acast. See <a style='color:grey;' target='_blank' rel='noopener noreferrer' href='https://acast.com/privacy'>acast.com/privacy</a> for more information.</p>",
+      "link": "https://shows.acast.com/karlskogabaptist/episodes/6b02fece61907e875b683012",
+      "audioUrl": "https://sphinx.acast.com/p/open/s/670bc7f4092cc24098fc385a/e/6b02fece61907e875b683012/media.mp3"
+    },
     {
       "title": "Ödmjukhet",
       "speaker": "Mikael Andersson",
